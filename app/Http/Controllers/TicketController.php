@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -19,24 +20,24 @@ class TicketController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicketRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $ticket = Ticket::create([
+            'title' => $validated['title'],
+            'descr' => $validated['descr'],
+            'priority_id' => $validated['priority_id'],
+            'user_id' => auth()->id(),
+            'status_id' => 0,
+        ]);
+
+        return response()->json($ticket, 201);
+        
     }
 
     /**

@@ -24,7 +24,9 @@ class StoreTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'descr' => 'required',
+            'priority_id' => 'exists:priorities'
         ];
     }
 }
