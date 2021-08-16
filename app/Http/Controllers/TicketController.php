@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Models\Priority;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return TicketResource::collection(Ticket::all());
+        return TicketResource::collection(Ticket::paginate(15));
     }
 
     /**
@@ -33,7 +34,7 @@ class TicketController extends Controller
             'descr' => $validated['descr'],
             'priority_id' => $validated['priority_id'],
             'user_id' => auth()->id(),
-            'status_id' => 0,
+            'status_id' => 1,
         ]);
 
         return response()->json($ticket, 201);

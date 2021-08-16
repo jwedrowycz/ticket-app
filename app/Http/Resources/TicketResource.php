@@ -20,6 +20,7 @@ class TicketResource extends JsonResource
             'descr'        => $this->descr,
             'status'       => $this->status->state,
             'priority'     => $this->priority->state,
+            'color'     => $this->priority->color,
         ];
     }
 }

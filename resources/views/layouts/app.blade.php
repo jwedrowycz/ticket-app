@@ -18,6 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @auth
+        <script>window.authUser={!! json_encode(auth()->user()); !!};</script>
+    @else
+        <script>window.authUser=null;</script>
+    @endauth
 </head>
 <body>
     <div id="app">
@@ -33,7 +39,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li>
+                            {{-- <a href="{{ route('ticket.add') }}" class="nav-link"></a> --}}
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -79,5 +87,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 </body>
 </html>
