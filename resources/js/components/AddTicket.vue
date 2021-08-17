@@ -11,22 +11,26 @@
                             {{ option.state }}
                         </option>
                         </select>
+                        <div v-if="errors && errors.state" class="text-danger">{{ errors.state[0] }}</div>
                     </div>
                     <div class="form-group">
                         <label>Nazwa</label>
                         <input type="text" class="form-control" v-model="ticket.title">
+                        <div v-if="errors && errors.title" class="text-danger">{{ errors.title[0] }}</div>
                     </div>
                     <div class="form-group">
                         <label>Krótki opis</label>
                         <textarea type="text" class="form-control" v-model="ticket.descr"></textarea>
+                        <div v-if="errors && errors.descr" class="text-danger">{{ errors.descr[0] }}</div>
                     </div>
-                    
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
             </div>
         </div>
     </div>
 </template>
+
+
 
 <script>
     export default {
@@ -36,13 +40,16 @@
                 // p_options: {},
                 s_options: {},
                 selected: null,
-                p_options: []
+                p_options: [],
+                loading: true,
+                errors: {},
                 }
         },
         mounted () {
             axios.get('/api/priorities').then(response => {
                 this.p_options = response.data;
-            })
+            });
+           
         },
         methods: {
             addTicket() {
@@ -50,9 +57,16 @@
                     axios
                         .post('/api/tickets', this.ticket)
                         .then(response => (
-                            console.log(response.data)
+                            this.$root.$emit('ticket_added'),
+                            this.makeToast('Pomyślnie dodano zgłoszenie', 'Zgłoszenie', 'success')
                         ))
-                        .catch(error => console.log(error))
+                        .catch(error =>  {
+                            if (error.response.status == 422) {
+                                this.errors = error.response.data.errors;
+                            } else {
+                                this.makeToast('Wystąpił nieoczekiwany błąd', 'Menadżer Zadań', 'danger');
+                            }
+                        })
                         .finally(() => this.loading = false);
                 }
             )},
@@ -62,7 +76,7 @@
                     autoHideDelay: 7000,
                     variant: variant,
                 });
-            }
+            },
         }
         
     }

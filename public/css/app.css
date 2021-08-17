@@ -71,6 +71,11 @@
   background: #ff8783;
 }
 
+.td-full {
+  width: 100%;
+  height: 100%;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

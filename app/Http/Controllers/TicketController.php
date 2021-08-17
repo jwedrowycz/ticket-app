@@ -17,7 +17,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return TicketResource::collection(Ticket::paginate(15));
+        return TicketResource::collection(Ticket::latest()->paginate(10));
     }
 
     /**
@@ -83,6 +83,12 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        if($ticket->user_id != auth()->id())
+        {
+            abort(403);
+        }
+
+        $ticket->delete();
+        return response()->json(null, 204);
     }
 }
