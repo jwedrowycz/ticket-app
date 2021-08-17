@@ -5,7 +5,7 @@
             <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                 {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
             </b-button>
-            <b-button v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
+            <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
                 Usuń
             </b-button>
             <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
