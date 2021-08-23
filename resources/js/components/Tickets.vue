@@ -1,5 +1,18 @@
 <template>
 <div :class="{'loading':loading}">
+        <b-form-group label="Filtruj zgłoszenia" v-slot="{ ariaDescribedby }">
+            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
+            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
+            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zakończone</b-form-radio>
+        </b-form-group>
+        <!-- <b-form-checkbox
+            id="checkbox_only_completed"
+            v-model="filters.completed"
+            value="true"
+            unchecked-value="false"
+            @change="filterTasks">
+            Tylko ukończone zadania
+        </b-form-checkbox> -->
         <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
 
             <template #cell(actions)="row">
@@ -39,6 +52,7 @@ export default {
             tickets: {},
             loading: true,  
             state: '', 
+            selected: '',
             fields: [
                 { key: 'id', label: 'Id zgłoszenia' },
                 { key: 'title', label: 'Tytuł' },
@@ -100,6 +114,14 @@ export default {
                 });
          
         },
+        filterTickets(page = localStorage.getItem('current_page')) {
+                // this.loading = true;
+                axios.get('http://127.0.0.1:8000/api/tickets?page=' + page + '?tickets=' + this.selected)
+                .then(response => { 
+                    // this.tickets = response.data; 
+                    // this.loading = false;
+                    });
+            },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
                 this.$root.$bvToast.toast(msg, {
                     title: title,
@@ -108,6 +130,7 @@ export default {
                     position: position,
                 });
             },
+            
         
     }
 }
