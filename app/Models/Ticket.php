@@ -17,13 +17,18 @@ class Ticket extends Model
         return Carbon::parse($value)->format('d.m.Y');
     }
 
-    protected function status()
+    public function status()
     {
         return $this->belongsTo(Status::class);
     }
 
-    protected function priority()
+    public function priority()
     {
         return $this->belongsTo(Priority::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

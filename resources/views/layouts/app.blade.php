@@ -7,7 +7,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}
+        @if(count(auth()->user()->notifications) > 0)
+        ({{ count(auth()->user()->notifications) }})
+        @endif
+    </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,9 +22,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     @auth
         <script>window.authUser={!! json_encode(auth()->user()); !!};</script>
+        @hasrole('admin')
+            <script>window.adminUser={!! json_encode(auth()->user()->hasRole('admin')); !!};</script>
+        @else
+            <script>window.adminUser=null;</script>
+        @endhasrole
     @else
         <script>window.authUser=null;</script>
     @endauth
@@ -60,6 +69,26 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="bi bi-bell"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                        @if(count(auth()->user()->notifications) > 0)
+                                            {{ count(auth()->user()->notifications) }}
+                                        @endif
+                                    </span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @foreach(auth()->user()->notifications as $notification)
+                                    <a class="dropdown-item" href="">
+                                        <p>{!! $notification->data['message']; !!}</p>
+                                        <small>{{ $notification->created_at; }}</small>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    @endforeach
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

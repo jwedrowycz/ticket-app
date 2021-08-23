@@ -58,7 +58,8 @@
                         .post('/api/tickets', this.ticket)
                         .then(response => (
                             this.$root.$emit('ticket_added'),
-                            this.makeToast('Pomyślnie dodano zgłoszenie', 'Zgłoszenie', 'success')
+                            this.makeToast('Pomyślnie dodano zgłoszenie', 'Zgłoszenie', 'success'),
+                            this.resetInput()
                         ))
                         .catch(error =>  {
                             if (error.response.status == 422) {
@@ -70,13 +71,18 @@
                         .finally(() => this.loading = false);
                 }
             )},
-            makeToast(msg, title, variant) {
+            makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
                 this.$root.$bvToast.toast(msg, {
                     title: title,
                     autoHideDelay: 7000,
                     variant: variant,
+                    position: position,
                 });
             },
+            resetInput() {
+                this.ticket.title = '';
+                this.ticket.descr = '';
+            }
         }
         
     }

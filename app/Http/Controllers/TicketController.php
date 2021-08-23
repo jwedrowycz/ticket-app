@@ -17,7 +17,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return TicketResource::collection(Ticket::latest()->paginate(10));
+        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->latest()->paginate(10));
     }
 
     /**
@@ -36,7 +36,6 @@ class TicketController extends Controller
             'user_id' => auth()->id(),
             'status_id' => 1,
         ]);
-
         return response()->json($ticket, 201);
         
     }

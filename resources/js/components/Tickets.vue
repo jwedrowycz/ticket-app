@@ -1,22 +1,35 @@
 <template>
-    <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white">
+<div :class="{'loading':loading}">
+        <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
 
-        <template #cell(actions)="row">
-            <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
-            </b-button>
-            <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
-                Usuń
-            </b-button>
-            <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
-        </template>
+            <template #cell(actions)="row">
+                <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+                    <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
+                    Pokaż Opis
+                </b-button>
+                <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
+                    Usuń
+                </b-button>
+                <template v-if="adminUser && row.item.status == 'Wysłane'">
+                    <b-button size="sm" variant="info" @click="pursueTicket(row.item.id)">
+                        Realizuj
+                    </b-button>
+                </template>
+                <template v-if="adminUser && row.item.status == 'W realizacji'">
+                    <b-button size="sm" variant="success" @click="completeTicket(row.item.id)">
+                        Zakończ
+                    </b-button>
+                </template>
+                <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
+            </template>
 
-         <template #row-details="row">
-             <p><b>Opis: </b>{{ row.item.descr }}</p>
-         </template>
-    </b-table>
-        
-    
+            <template #row-details="row">
+                <p><b>Opis: </b>{{ row.item.descr }}</p>
+            </template>
+            
+        </b-table>
+        <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>
+    </div>
 </template>
 
 <script>
@@ -24,7 +37,8 @@ export default {
     data() {
         return {
             tickets: {},
-            loading: true,   
+            loading: true,  
+            state: '', 
             fields: [
                 { key: 'id', label: 'Id zgłoszenia' },
                 { key: 'title', label: 'Tytuł' },
@@ -33,7 +47,8 @@ export default {
                 { key: 'status', label: 'Status' },
                 { key: 'actions', label: 'Akcje' },
 
-                ]
+                ],
+            adminUser: window.adminUser,
         }
     },
     mounted () {
@@ -48,11 +63,11 @@ export default {
                     .then((response) => {
                         this.tickets = response.data;
                         this.loading = false;
+                        localStorage.setItem('current_page', response.data.meta.current_page)
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
-                    
             },
 
         addTdClass(value, key, item) {
@@ -67,9 +82,33 @@ export default {
             }).catch(error => {
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
+                    this.makeToast(this.errors, 'Błąd', 'danger');
+
                 }
             });
-    },
+        },
+        pursueTicket(id) {
+                axios.put('/api/admin/tickets/pursue/'+id).then(response => {
+                    this.makeToast('Zgłoszenie jest w realizacji', 'Zgłoszenia', 'info');
+                    this.loadTickets(localStorage.getItem('current_page'));
+                });
+        },
+        completeTicket(id) {
+                axios.put('/api/admin/tickets/complete/'+id).then(response => {
+                    this.makeToast('Zgłoszenie zostało zrealizowane', 'Zgłoszenia', 'success');
+                    this.loadTickets(localStorage.getItem('current_page'));
+                });
+         
+        },
+        makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
+                this.$root.$bvToast.toast(msg, {
+                    title: title,
+                    autoHideDelay: 5000,
+                    variant: variant,
+                    position: position,
+                });
+            },
+        
     }
 }
 </script>
