@@ -1,6 +1,7 @@
 <template>
 <div :class="{'loading':loading}">
         <b-form-group label="Filtruj zgłoszenia" v-slot="{ ariaDescribedby }">
+            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zakończone</b-form-radio>
@@ -16,13 +17,16 @@
         <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
 
             <template #cell(actions)="row">
+                
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
                     Pokaż Opis
                 </b-button>
-                <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
-                    Usuń
-                </b-button>
+                <template v-if="!adminUser">
+                    <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
+                        Usuń
+                    </b-button>
+                </template>
                 <template v-if="adminUser && row.item.status == 'Wysłane'">
                     <b-button size="sm" variant="info" @click="pursueTicket(row.item.id)">
                         Realizuj
@@ -114,13 +118,15 @@ export default {
                 });
          
         },
-        filterTickets(page = localStorage.getItem('current_page')) {
-                // this.loading = true;
-                axios.get('http://127.0.0.1:8000/api/tickets?page=' + page + '?tickets=' + this.selected)
+        filterTickets(page = 1) {
+                axios.get('http://127.0.0.1:8000/api/tickets', { params: {
+                        tickets: this.selected,
+                        page: page
+                    }
+                })
                 .then(response => { 
-                    // this.tickets = response.data; 
-                    // this.loading = false;
-                    });
+                    this.tickets = response.data; 
+                });
             },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
                 this.$root.$bvToast.toast(msg, {

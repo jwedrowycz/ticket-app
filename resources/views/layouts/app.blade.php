@@ -8,9 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}
-        @if(count(auth()->user()->notifications) > 0)
-        ({{ count(auth()->user()->notifications) }})
-        @endif
+        {{-- @auth
+        ({{ count(auth()->user()->unreadNotifications) }})
+        @endauth --}}
     </title>
 
     <!-- Scripts -->
@@ -73,14 +73,14 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="bi bi-bell"></i>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                        @if(count(auth()->user()->notifications) > 0)
-                                            {{ count(auth()->user()->notifications) }}
-                                        @endif
+                                            @if(count(auth()->user()->unreadNotifications) > 0)
+                                                {{ count(auth()->user()->unreadNotifications) }}
+                                            @endif
                                     </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach(auth()->user()->notifications as $notification)
+                                    @foreach(auth()->user()->unreadNotifications as $notification)
                                     <a class="dropdown-item" href="">
                                         <p>{!! $notification->data['message']; !!}</p>
                                         <small>{{ $notification->created_at; }}</small>
