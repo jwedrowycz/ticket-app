@@ -56,7 +56,7 @@ export default {
             tickets: {},
             loading: true,  
             state: '', 
-            selected: '',
+            selected: 0,
             fields: [
                 { key: 'id', label: 'Id zgłoszenia' },
                 { key: 'title', label: 'Tytuł' },
@@ -71,13 +71,16 @@ export default {
     },
     mounted () {
         this.loadTickets();
-         this.$root.$on('ticket_added', () => {
-               this.loadTickets();
-            });
+        this.$root.$on('ticket_added', () => { // Nasłuchuje wydarzenie dodania ticketa
+            this.loadTickets();
+        });
     },
     methods: {
         loadTickets(page = 1) {
-                axios.get('/api/tickets?page=' + page)
+                axios.get('/api/tickets', { params: {
+                    page: page,
+                    tickets: this.selected
+                } })
                     .then((response) => {
                         this.tickets = response.data;
                         this.loading = false;
@@ -95,7 +98,7 @@ export default {
         deleteTicket(id) {
             axios.get('sanctum/csrf-cookie').then(response => {
                 axios.delete('/api/tickets/'+id);
-                this.loadTickets();
+                this.loadTickets(localStorage.getItem('current_page'));
                 this.makeToast('Zgłoszenie zostało usunięte', 'Zgłoszenia', 'info');
             }).catch(error => {
                 if (error.response.status == 422) {
@@ -118,14 +121,17 @@ export default {
                 });
          
         },
-        filterTickets(page = 1) {
+        filterTickets() {
+                this.loading = true;
                 axios.get('http://127.0.0.1:8000/api/tickets', { params: {
                         tickets: this.selected,
-                        page: page
+                        page: 1,
                     }
                 })
                 .then(response => { 
                     this.tickets = response.data; 
+                    this.loading = false;
+
                 });
             },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {

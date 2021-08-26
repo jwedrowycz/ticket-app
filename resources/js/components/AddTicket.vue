@@ -14,7 +14,7 @@
                         <div v-if="errors && errors.state" class="text-danger">{{ errors.state[0] }}</div>
                     </div>
                     <div class="form-group">
-                        <label>Nazwa</label>
+                        <label>Tytuł</label>
                         <input type="text" class="form-control" v-model="ticket.title">
                         <div v-if="errors && errors.title" class="text-danger">{{ errors.title[0] }}</div>
                     </div>

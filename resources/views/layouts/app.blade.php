@@ -80,13 +80,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach(auth()->user()->unreadNotifications as $notification)
+                                    @foreach(auth()->user()->unreadNotifications->take(5) as $notification)
                                     <a class="dropdown-item" href="">
                                         <p>{!! $notification->data['message']; !!}</p>
                                         <small>{{ $notification->created_at; }}</small>
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     @endforeach
+                                    <div class="text-center"><a href="">{{ __('Zobacz wszystkie') }}</a></div>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

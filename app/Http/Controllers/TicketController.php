@@ -17,19 +17,13 @@ class TicketController extends Controller
      */
     public function index()
     {
-        if(request()->has('tickets'))
+        if(request()->query('tickets') != 0)
             return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('status_id', request()->query('tickets'))->latest()->paginate(10));
-
+        
         return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->latest()->paginate(10));
     }
 
 
-    public function filter()
-    {
-        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->when(request()->query('only_sent') == "true", function ($query) {
-            $query->where('status', 1);
-        }));
-    }
     /**
      * Store a newly created resource in storage.
      *

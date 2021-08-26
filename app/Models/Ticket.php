@@ -31,4 +31,11 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeWithFilters()
+    {
+        return $this->when(request()->query('tickets'), function($query) {
+            $query->where('status_id', request()->query('tickets'));
+        });
+    }
 }
