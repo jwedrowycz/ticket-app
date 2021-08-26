@@ -20,14 +20,6 @@ class CreateStatusesTable extends Migration
             $table->integer('state');
             $table->string('color')->nullable();
         });
-
-        DB::table('statuses')->insert(
-            [
-                ['state' => 0], // wysłany
-                ['state' => 1], // w realizacji
-                ['state' => 2], // zrealizowany   
-            ]
-        );
     }
 
     /**

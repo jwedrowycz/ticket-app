@@ -14,8 +14,21 @@ class PrioritySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'title' => [],
-        ]);
+        DB::table('priorities')->insert(
+            [
+                [
+                    'state' => 0,
+                    'color' => 'bg-info'
+                ], // niski
+                [
+                    'state' => 1,
+                    'color' => 'bg-warning'
+                ], // średni
+                [
+                    'state' => 2,
+                    'color' => 'bg-l-red'
+                ], // wysoki
+            ]
+        );
     }
 }

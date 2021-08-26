@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatusSeeder extends Seeder
 {
@@ -13,6 +14,12 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('statuses')->insert(
+            [
+                ['state' => 0], // wysłany
+                ['state' => 1], // w realizacji
+                ['state' => 2], // zrealizowany   
+            ]
+        );
     }
 }

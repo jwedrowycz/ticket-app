@@ -21,13 +21,7 @@ class CreatePrioritiesTable extends Migration
             $table->string('color')->nullable();
         });
 
-        DB::table('priorities')->insert(
-            [
-                ['state' => 0], // niski
-                ['state' => 1], // średni
-                ['state' => 2], // wysoki
-            ]
-        );
+      
     }
 
     /**
