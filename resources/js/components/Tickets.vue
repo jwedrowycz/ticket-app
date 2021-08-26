@@ -1,23 +1,38 @@
 <template>
-<div :class="{'loading':loading}">
+<div>
         <b-form-group label="Filtruj zgłoszenia" v-slot="{ ariaDescribedby }">
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
-            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zakończone</b-form-radio>
+            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zrealizowane</b-form-radio>
         </b-form-group>
-        <!-- <b-form-checkbox
-            id="checkbox_only_completed"
-            v-model="filters.completed"
-            value="true"
-            unchecked-value="false"
-            @change="filterTasks">
-            Tylko ukończone zadania
-        </b-form-checkbox> -->
-        <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
+        <!-- <div class="form-check">
+            <input class="form-check-input" type="radio" v-model="selected" value="0" id="flexRadioDefault1" @click="filterTickets">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Wszystkie
+        </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" v-model="selected" value="1" id="flexRadioDefault2" @click="filterTickets">
+            <label class="form-check-label" for="flexRadioDefault2">
+                Wysłane
+            </label>
+        </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" v-model="selected" value="2" id="flexRadioDefault3" @click="filterTickets">
+            <label class="form-check-label" for="flexRadioDefault3">
+                W realizacji
+        </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" v-model="selected" value="3" id="flexRadioDefault4" @click="filterTickets">
+            <label class="form-check-label" for="flexRadioDefault4">
+                Zrealizowane
+            </label>
+        </div> -->
 
+        <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
             <template #cell(actions)="row">
-                
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
                     Pokaż Opis
@@ -39,11 +54,9 @@
                 </template>
                 <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
             </template>
-
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
             </template>
-            
         </b-table>
         <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>
     </div>
@@ -74,6 +87,9 @@ export default {
         this.$root.$on('ticket_added', () => { // Nasłuchuje wydarzenie dodania ticketa
             this.loadTickets();
         });
+    },
+    updated () {
+        
     },
     methods: {
         loadTickets(page = 1) {
@@ -122,7 +138,6 @@ export default {
          
         },
         filterTickets() {
-                this.loading = true;
                 axios.get('http://127.0.0.1:8000/api/tickets', { params: {
                         tickets: this.selected,
                         page: 1,
@@ -130,8 +145,6 @@ export default {
                 })
                 .then(response => { 
                     this.tickets = response.data; 
-                    this.loading = false;
-
                 });
             },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
@@ -143,7 +156,6 @@ export default {
                 });
             },
             
-        
     }
 }
 </script>

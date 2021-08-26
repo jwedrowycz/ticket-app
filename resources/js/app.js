@@ -1,7 +1,6 @@
 require('./bootstrap');
 
 import VueRouter from 'vue-router';
-// import {routes} from '';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -22,11 +21,6 @@ Vue.component('ticket-filters-component', require('./components/TicketFilters.vu
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-
- const router = new VueRouter({
-    mode: 'history',
-});
 
 const app = new Vue({
     el: '#app',
