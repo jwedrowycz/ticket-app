@@ -16,15 +16,15 @@ class Category extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function getNameAttribute($value)
+    public function getValueAttribute($value)
     {
         switch($value){
             case 0: 
                 return 'Awarie';
             case 1:
-                return 'Pytania';
-            case 2: 
                 return 'Zapotrzebowanie';
+            case 2: 
+                return 'Pytania';
         }
     }
 }

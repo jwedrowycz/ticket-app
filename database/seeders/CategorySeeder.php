@@ -18,12 +18,15 @@ class CategorySeeder extends Seeder
             [
                 [
                     'value' => 0,
+                    'name' => 'incidents'
                 ],
                 [
                     'value' => 1,
+                    'name' => 'orders'
                 ],
                 [
                     'value' => 2,
+                    'name' => 'questions'
                 ],
             ]
         );

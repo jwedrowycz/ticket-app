@@ -22,6 +22,9 @@ Auth::routes();
 
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/incidents', [App\Http\Controllers\HomeController::class, 'incidents'])->name('incidents');
+// Route::get('/questions', [App\Http\Controllers\HomeController::class, 'questions'])->name('questions');
+// Route::get('/orders', [App\Http\Controllers\HomeController::class, 'orders'])->name('orders');
 
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
