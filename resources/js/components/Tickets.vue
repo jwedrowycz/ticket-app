@@ -31,7 +31,13 @@
             </label>
         </div> -->
 
-        <b-table :items="tickets.data" :fields="fields" bordered head-variant="light" responsive="sm" class="bg-white" >
+        <b-table :items="tickets.data" :fields="fields" :busy="isBusy" bordered head-variant="light" responsive="sm" class="bg-white" >
+            <template #table-busy>
+                <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Ładowanie...</strong>
+                </div>
+            </template>
             <template #cell(actions)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
@@ -70,6 +76,7 @@ export default {
             loading: true,  
             state: '', 
             selected: 0,
+            isBusy: false,
             fields: [
                 { key: 'id', label: 'Id zgłoszenia' },
                 { key: 'title', label: 'Tytuł' },
@@ -93,13 +100,14 @@ export default {
     },
     methods: {
         loadTickets(page = 1) {
+                this.isBusy = true;
                 axios.get('/api/tickets', { params: {
                     page: page,
                     tickets: this.selected
                 } })
                     .then((response) => {
                         this.tickets = response.data;
-                        this.loading = false;
+                        this.isBusy = false;
                         localStorage.setItem('current_page', response.data.meta.current_page)
                     })
                     .catch(function (error) {
@@ -138,6 +146,7 @@ export default {
          
         },
         filterTickets() {
+                this.isBusy = true;
                 axios.get('http://127.0.0.1:8000/api/tickets', { params: {
                         tickets: this.selected,
                         page: 1,
@@ -145,6 +154,7 @@ export default {
                 })
                 .then(response => { 
                     this.tickets = response.data; 
+                    this.isBusy = false;
                 });
             },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
