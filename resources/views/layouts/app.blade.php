@@ -7,10 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}
-        {{-- @auth
-        ({{ count(auth()->user()->unreadNotifications) }})
-        @endauth --}}
+    <title>
+        @yield('title')
+        @auth
+            @if(count(auth()->user()->unreadNotifications) > 0)
+                ({{ count(auth()->user()->unreadNotifications) }})
+            @endif
+        @endauth
+        | {{ config('app.name', 'Laravel') }}
     </title>
 
     <!-- Scripts -->
@@ -49,7 +53,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li>
-                            {{-- <a href="{{ route('ticket.add') }}" class="nav-link"></a> --}}
+                            <a href="{{ route('incidents') }}" class="nav-link {{ request()->routeIs('incidents') ? 'active' : '' }}">{{ __('Awarie') }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('orders') }}" class="nav-link {{ request()->routeIs('orders') ? 'active' : '' }}">{{ __('Zapotrzebowanie') }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('questions') }}" class="nav-link {{ request()->routeIs('questions') ? 'active' : '' }}">{{ __('Pytania') }}</a>
                         </li>
                     </ul>
 
