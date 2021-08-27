@@ -1,11 +1,13 @@
 <template>
 <div>
+    <div class="bg-white p-3 mb-3">
         <b-form-group label="Filtruj zgłoszenia" v-slot="{ ariaDescribedby }">
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
             <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zrealizowane</b-form-radio>
         </b-form-group>
+    </div>
         <!-- <div class="form-check">
             <input class="form-check-input" type="radio" v-model="selected" value="0" id="flexRadioDefault1" @click="filterTickets">
             <label class="form-check-label" for="flexRadioDefault1">

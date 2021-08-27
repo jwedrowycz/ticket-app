@@ -23,6 +23,7 @@ class TicketSeeder extends Seeder
                 'user_id' => 2,
                 'status_id' => 1,
                 'priority_id' => 3,
+                'category_id' => 1,
             ],               
             [
                 'title' => 'Brak tonera',
@@ -31,6 +32,7 @@ class TicketSeeder extends Seeder
                 'user_id' => 2,
                 'status_id' => 1,
                 'priority_id' => 2,
+                'category_id' => 2,
             ],   
             [
                 'title' => 'Ryza papieru',
@@ -39,6 +41,7 @@ class TicketSeeder extends Seeder
                 'user_id' => 2,
                 'status_id' => 1,
                 'priority_id' => 1,
+                'category_id' => 3,
             ],             
         ]);
     }
