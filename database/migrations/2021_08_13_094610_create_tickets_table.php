@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->string('descr');
+            $table->text('descr');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('priority_id')->constrained();
             $table->foreignId('status_id')->constrained();

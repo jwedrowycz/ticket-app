@@ -34,6 +34,9 @@
 
 <script>
     export default {
+        props: {
+            category: String,
+        },
         data() {
             return {
                 ticket: {},
@@ -49,13 +52,13 @@
             axios.get('/api/priorities').then(response => {
                 this.p_options = response.data;
             });
-           
         },
+
         methods: {
             addTicket() {
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
-                        .post('/api/tickets', this.ticket)
+                        .post('/api/tickets/' + this.category, this.ticket)
                         .then(response => (
                             this.$root.$emit('ticket_added'),
                             this.makeToast('Pomyślnie dodano zgłoszenie', 'Zgłoszenie', 'success'),

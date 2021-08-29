@@ -16,7 +16,7 @@ class Category extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function getValueAttribute($value)
+    public function getNameAttribute($value)
     {
         switch($value){
             case 0: 

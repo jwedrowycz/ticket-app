@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Zapotrzebowanie')
 @section('content')
 <div class="container">
-    <add-ticket-component></add-ticket-component>
-    <tickets-component></tickets-component>
+    <add-ticket-component category="orders"></add-ticket-component>
+    <tickets-component category="orders"></tickets-component>
 </div>
 @endsection

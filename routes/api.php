@@ -23,10 +23,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /* Ticket */
-Route::get('tickets', [TicketController::class, 'index']);
+Route::get('tickets/{category:name}', [TicketController::class, 'index']);
 Route::get('tickets/{ticket}', [TicketController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('tickets', [TicketController::class, 'store']);
+    Route::post('/tickets/{category:name}', [TicketController::class, 'store']);
     Route::put('tickets/{ticket}', [TicketController::class, 'update']);
     Route::delete('tickets/{ticket}', [TicketController::class, 'destroy']);
 });

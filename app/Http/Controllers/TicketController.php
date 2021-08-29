@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Models\Category;
 use App\Models\Priority;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -15,12 +16,12 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
         if(request()->query('tickets') != 0)
-            return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('status_id', request()->query('tickets'))->latest()->paginate(10));
+            return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('status_id', request()->query('tickets'))->andWhere('category_id', $category->id)->latest()->paginate(10));
         
-        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->latest()->paginate(10));
+        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('category_id', $category->id)->latest()->paginate(10));
     }
 
 
@@ -30,7 +31,7 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTicketRequest $request)
+    public function store(StoreTicketRequest $request, Category $category)
     {
         $validated = $request->validated();
         $ticket = Ticket::create([
@@ -39,6 +40,7 @@ class TicketController extends Controller
             'priority_id' => $validated['priority_id'],
             'user_id' => auth()->id(),
             'status_id' => 1,
+            'category_id' => $category->id,
         ]);
         return response()->json($ticket, 201);
         

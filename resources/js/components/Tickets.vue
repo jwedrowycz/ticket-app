@@ -72,6 +72,9 @@
 
 <script>
 export default {
+    props: {
+        category: String
+    },
     data() {
         return {
             tickets: {},
@@ -103,7 +106,7 @@ export default {
     methods: {
         loadTickets(page = 1) {
                 this.isBusy = true;
-                axios.get('/api/tickets', { params: {
+                axios.get('/api/tickets/' + this.category, { params: {
                     page: page,
                     tickets: this.selected
                 } })

@@ -3,7 +3,7 @@
 @section('title', 'Awarie')
 @section('content')
 <div class="container">
-    <add-ticket-component></add-ticket-component>
-    <tickets-component></tickets-component>
+    <add-ticket-component category="incidents"></add-ticket-component>
+    <tickets-component category="incidents"></tickets-component>
 </div>
 @endsection
