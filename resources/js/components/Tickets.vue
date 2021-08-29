@@ -83,13 +83,12 @@ export default {
             selected: 0,
             isBusy: false,
             fields: [
-                { key: 'id', label: 'Id zgłoszenia' },
-                { key: 'title', label: 'Tytuł' },
-                { key: 'created_at', label: 'Data zgłoszenia'},
-                { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
-                { key: 'status', label: 'Status' },
-                { key: 'actions', label: 'Akcje' },
-
+                    { key: 'id', label: 'Id zgłoszenia' },
+                    { key: 'title', label: 'Tytuł' },
+                    { key: 'created_at', label: 'Data zgłoszenia'},
+                    { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
+                    { key: 'status', label: 'Status' },
+                    { key: 'actions', label: 'Akcje' },
                 ],
             adminUser: window.adminUser,
         }

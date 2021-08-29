@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,27 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('{any}', function () {
-//     return view('app');
-// })->where('any', '.*');
-
 Auth::routes();
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/incidents', function() { 
-            return view('incidents'); 
-        })->name('incidents');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/orders', function() { 
-            return view('orders'); 
-        })->name('orders');
-
-Route::get('/questions', function() { 
-            return view('questions'); 
-        })->name('questions');
+Route::view('/incidents', 'incidents')->name('incidents');
+Route::view('/orders', 'orders')->name('orders');
+Route::view('/questions', 'questions')->name('questions');
 
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 });

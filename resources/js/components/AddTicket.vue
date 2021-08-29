@@ -2,7 +2,7 @@
     <div>
         <div class="row justify-content-center m-3">
             <div class="col-md-6 bg-white p-3">
-                <h3 class="text-center">Wyślij zgłoszenie</h3>
+                <h3 class="text-center">Wyślij zgłoszenie: {{ title }}</h3>
                 <form @submit.prevent="addTicket">
                     <div class="form-group">
                         <label>Priorytet</label>
@@ -36,6 +36,7 @@
     export default {
         props: {
             category: String,
+            title: String,
         },
         data() {
             return {
