@@ -5,12 +5,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'descr', 'user_id', 'status_id', 'priority_id', 'category_id'];
+    protected $fillable = ['title', 'descr', 'user_id', 'status_id', 'priority_id', 'category_id', 'updated_by'];
     
     protected function getCreatedAtAttribute($value)
     {
