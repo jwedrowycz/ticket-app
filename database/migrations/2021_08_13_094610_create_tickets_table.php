@@ -22,6 +22,7 @@ class CreateTicketsTable extends Migration
             $table->foreignId('priority_id')->constrained();
             $table->foreignId('status_id')->constrained();
             $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->string('screenshot')->nullable();
             $table->softDeletes();
         });
     }

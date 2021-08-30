@@ -54,7 +54,6 @@
                 this.p_options = response.data;
             });
         },
-
         methods: {
             addTicket() {
                 axios.get('/sanctum/csrf-cookie').then(response => {

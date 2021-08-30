@@ -77,6 +77,7 @@ export default {
                     { key: 'created_at', label: 'Data zgłoszenia'},
                     { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
                     { key: 'status', label: 'Status' },
+                    { key: 'user', label: 'Użytkownik' },
                     { key: 'actions', label: 'Akcje' },
                 ],
             adminUser: window.adminUser,

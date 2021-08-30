@@ -7,6 +7,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Category;
 use App\Models\Priority;
 use App\Models\Ticket;
+use App\Services\UploadImage;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -37,6 +38,7 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request, Category $category)
     {
         $validated = $request->validated();
+        
         $ticket = Ticket::create([
             'title' => $validated['title'],
             'descr' => $validated['descr'],
@@ -45,8 +47,8 @@ class TicketController extends Controller
             'status_id' => 1,
             'category_id' => $category->id,
         ]);
-        return response()->json($ticket, 201);
         
+        return response()->json($ticket, 201);
     }
 
     /**
