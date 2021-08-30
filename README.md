@@ -79,7 +79,7 @@ $ php artisan migrate --seed
 ## TODO
 
 - [ ] Real-time notifications
-- [ ] Ticket categories
+- [x] Ticket categories
 - [ ] Ticket comments
 - [x] Priority filter
 
