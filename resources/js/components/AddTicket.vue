@@ -23,7 +23,10 @@
                         <textarea type="text" class="form-control" v-model="ticket.descr"></textarea>
                         <div v-if="errors && errors.descr" class="text-danger">{{ errors.descr[0] }}</div>
                     </div>
-                     <input type="file" class="form-control" @change="onFileChange">
+                    <div class="custom-file mb-3">
+                        <input type="file" id="customFile" class="custom-file-input" @change="onFileChange">
+                        <label for="customFile" class="custom-file-label" lang="pl"></label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
             </div>
