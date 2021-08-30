@@ -18,10 +18,7 @@ class TicketController extends Controller
      */
     public function index(Category $category)
     {
-        if(request()->query('tickets') != 0)
-            return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('status_id', request()->query('tickets'))->andWhere('category_id', $category->id)->latest()->paginate(10));
-        
-        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->where('category_id', $category->id)->latest()->paginate(10));
+        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->withFilters()->withCategory($category)->latest()->paginate(10));
     }
 
 

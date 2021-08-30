@@ -3,7 +3,9 @@
 @section('title', 'Pytania')
 @section('content')
 <div class="container">
-    <add-ticket-component category="questions" title="Pytanie"></add-ticket-component>
+    @unlessrole('admin')
+        <add-ticket-component category="questions" title="Pytanie"></add-ticket-component>
+    @endunlessrole
     <tickets-component category="questions"></tickets-component>
 </div>
 @endsection

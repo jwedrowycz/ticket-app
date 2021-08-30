@@ -27,5 +27,5 @@ Route::view('/questions', 'questions')->name('questions');
 
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+    Route::view('/dashboard', 'admin.dashboard')->name('index');
 });

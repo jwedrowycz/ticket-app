@@ -1,43 +1,31 @@
 <template>
 <div>
     <div class="bg-white p-3 mb-3">
-        <b-form-group label="Filtruj zgłoszenia" v-slot="{ ariaDescribedby }">
-            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
-            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
-            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
-            <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="filter-radios" value="3" @change="filterTickets">Zrealizowane</b-form-radio>
-        </b-form-group>
+        <div class="row">
+            <div class="col-lg-2">
+                <b-form-group label="Status zgłoszenia" v-slot="{ ariaDescribedby }">
+                    <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
+                    <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
+                    <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="2" @change="filterTickets">W realizacji</b-form-radio>
+                    <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="3" @change="filterTickets">Zrealizowane</b-form-radio>
+                </b-form-group>
+            </div>
+            <div class="col-lg-2">
+                <b-form-group label="Priorytet zgłoszenia" v-slot="{ ariaDescribedby }">
+                    <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
+                    <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="1" @change="filterTickets">Niski</b-form-radio>
+                    <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="2" @change="filterTickets">Średni</b-form-radio>
+                    <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="3" @change="filterTickets">Wysoki</b-form-radio>
+                </b-form-group>
+            </div>
+        </div>
+        
     </div>
-        <!-- <div class="form-check">
-            <input class="form-check-input" type="radio" v-model="selected" value="0" id="flexRadioDefault1" @click="filterTickets">
-            <label class="form-check-label" for="flexRadioDefault1">
-                Wszystkie
-        </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" v-model="selected" value="1" id="flexRadioDefault2" @click="filterTickets">
-            <label class="form-check-label" for="flexRadioDefault2">
-                Wysłane
-            </label>
-        </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" v-model="selected" value="2" id="flexRadioDefault3" @click="filterTickets">
-            <label class="form-check-label" for="flexRadioDefault3">
-                W realizacji
-        </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" v-model="selected" value="3" id="flexRadioDefault4" @click="filterTickets">
-            <label class="form-check-label" for="flexRadioDefault4">
-                Zrealizowane
-            </label>
-        </div> -->
-
         <b-table :items="tickets.data" :fields="fields" :busy="isBusy" bordered head-variant="light" responsive="sm" class="bg-white" >
             <template #table-busy>
                 <div class="text-center text-danger my-2">
-                <b-spinner class="align-middle"></b-spinner>
-                <strong>Ładowanie...</strong>
+                    <b-spinner class="align-middle"></b-spinner>
+                    <strong>Ładowanie...</strong>
                 </div>
             </template>
             <template #cell(actions)="row">
@@ -80,8 +68,9 @@ export default {
             tickets: {},
             loading: true,  
             state: '', 
-            selected: 0,
             isBusy: false,
+            status: 0,
+            priority: 0,
             fields: [
                     { key: 'id', label: 'Id zgłoszenia' },
                     { key: 'title', label: 'Tytuł' },
@@ -95,19 +84,18 @@ export default {
     },
     mounted () {
         this.loadTickets();
-        this.$root.$on('ticket_added', () => { // Nasłuchuje wydarzenie dodania ticketa
+        this.$root.$on('ticket_added', () => { 
             this.loadTickets();
         });
-    },
-    updated () {
-        
     },
     methods: {
         loadTickets(page = 1) {
                 this.isBusy = true;
                 axios.get('/api/tickets/' + this.category, { params: {
                     page: page,
-                    tickets: this.selected
+                    status: this.status,
+                    priority: this.priority,
+                    
                 } })
                     .then((response) => {
                         this.tickets = response.data;
@@ -151,8 +139,9 @@ export default {
         },
         filterTickets() {
                 this.isBusy = true;
-                axios.get('http://127.0.0.1:8000/api/tickets', { params: {
-                        tickets: this.selected,
+                axios.get('http://127.0.0.1:8000/api/tickets/' + this.category, { params: {
+                        status: this.status,
+                        priority: this.priority,
                         page: 1,
                     }
                 })

@@ -37,10 +37,21 @@ class Ticket extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeWithFilters()
+    public function scopeWithFilters($query)
     {
-        return $this->when(request()->query('tickets'), function($query) {
-            $query->where('status_id', request()->query('tickets'));
+        return $query->when(request()->query('status') != 0, function($q) {
+            $q->where('status_id', request()->query('status'));
+        })
+        ->when(request()->query('priority') != 0, function($q) {
+            $q->where('priority_id', request()->query('priority'));
+        });
+    }
+
+
+    public function scopeWithCategory($query, $category)
+    {
+        return $query->when(true, function($q) use ($category) {
+            $q->where('category_id', $category->id);
         });
     }
 }
