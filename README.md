@@ -81,7 +81,7 @@ $ php artisan migrate --seed
 - [ ] Real-time notifications
 - [ ] Ticket categories
 - [ ] Ticket comments
-- [ ] Priority filter
+- [x] Priority filter
 
 ## License
 
