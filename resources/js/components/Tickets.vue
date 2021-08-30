@@ -52,6 +52,7 @@
             </template>
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
+                <img :src="'/public/storage/screenshots/' + row.item.screenshot">
             </template>
         </b-table>
         <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>

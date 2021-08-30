@@ -47,8 +47,14 @@ class TicketController extends Controller
             'status_id' => 1,
             'category_id' => $category->id,
         ]);
-        
+        if(isset($validated['screenshot'])){
+            $uploadedImage = UploadImage::upload($validated['screenshot'], 'app/public/screenshots', $validated['screenshot']->getClientOriginalExtension());
+            $ticket->screenshot = $uploadedImage;
+            $ticket->save();
+        }
+
         return response()->json($ticket, 201);
+        
     }
 
     /**
