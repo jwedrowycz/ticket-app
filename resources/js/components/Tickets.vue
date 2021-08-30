@@ -2,7 +2,7 @@
 <div>
     <div class="bg-white p-3 mb-3">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <b-form-group label="Status zgłoszenia" v-slot="{ ariaDescribedby }">
                     <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
                     <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="1" @change="filterTickets">Wysłane</b-form-radio>
@@ -10,7 +10,7 @@
                     <b-form-radio v-model="status" :aria-describedby="ariaDescribedby" name="filter-status-radios" value="3" @change="filterTickets">Zrealizowane</b-form-radio>
                 </b-form-group>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <b-form-group label="Priorytet zgłoszenia" v-slot="{ ariaDescribedby }">
                     <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="0" @change="filterTickets">Wszystkie</b-form-radio>
                     <b-form-radio v-model="priority" :aria-describedby="ariaDescribedby" name="filter-priority-radios" value="1" @change="filterTickets">Niski</b-form-radio>

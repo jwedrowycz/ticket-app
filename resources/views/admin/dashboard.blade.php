@@ -3,6 +3,6 @@
 @section('content')
 <div class="container">
     <h2>{{ __('Tablica zgłoszeń') }}</h2>
-    <tickets-component></tickets-component>
+    <tickets-component category="all"></tickets-component>
 </div>
 @endsection

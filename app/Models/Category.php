@@ -26,5 +26,5 @@ class Category extends Model
             case 2: 
                 return 'Pytania';
         }
-    }
+    }   
 }

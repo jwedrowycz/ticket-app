@@ -16,9 +16,15 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category)
+    public function index($categoryName = null)
     {
-        return TicketResource::collection(Ticket::with(['priority', 'status', 'user'])->withFilters()->withCategory($category)->latest()->paginate(10));
+        return TicketResource::collection(
+            Ticket::with(['priority', 'status', 'user'])
+                    ->withFilters()
+                    ->withCategory(Category::where('name', $categoryName)->first())
+                    ->latest()
+                    ->paginate(10)
+        );
     }
 
 

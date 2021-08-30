@@ -50,7 +50,7 @@ class Ticket extends Model
 
     public function scopeWithCategory($query, $category)
     {
-        return $query->when(true, function($q) use ($category) {
+        return $query->when(!is_null($category), function($q) use ($category) {
             $q->where('category_id', $category->id);
         });
     }

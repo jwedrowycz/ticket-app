@@ -28,6 +28,10 @@ class CategorySeeder extends Seeder
                     'value' => 2,
                     'name' => 'questions'
                 ],
+                [
+                    'value' => 3,
+                    'name' => 'all'
+                ],
             ]
         );
     }
