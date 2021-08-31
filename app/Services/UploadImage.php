@@ -6,7 +6,7 @@ class UploadImage {
 
     public static function upload($image, $storagePath, $value = '')
     {
-        $imageName = time() . $value . $image->extension();
+        $imageName = time() . auth()->user()->name . $value . $image->extension();
         $image->move(storage_path($storagePath), $imageName);
         return $imageName;
     }

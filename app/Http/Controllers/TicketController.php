@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Priority;
 use App\Models\Ticket;
 use App\Services\UploadImage;
@@ -47,12 +48,19 @@ class TicketController extends Controller
             'status_id' => 1,
             'category_id' => $category->id,
         ]);
-        if(isset($validated['screenshot'])){
-            $uploadedImage = UploadImage::upload($validated['screenshot'], 'app/public/screenshots', $validated['screenshot']->getClientOriginalExtension());
-            $ticket->screenshot = $uploadedImage;
-            $ticket->save();
-        }
+        // if(isset($validated['screenshot'])){
 
+        //     $uploadedImage = UploadImage::upload($validated['screenshot'], 'app/public/screenshots', $validated['screenshot']->getClientOriginalExtension());
+        //     $ticket->screenshot = $uploadedImage;
+        //     $ticket->save();
+        // }
+        foreach ($request->photos as $photo) {
+            $filename = $photo->store('photos');
+            File::create([
+                'ticket_id' => $ticket->id,
+                'filename' => $filename
+            ]);
+        }
         return response()->json($ticket, 201);
         
     }

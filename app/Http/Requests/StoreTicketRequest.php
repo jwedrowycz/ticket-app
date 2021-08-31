@@ -23,12 +23,18 @@ class StoreTicketRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [ 
             'title' => 'required',
             'descr' => 'required',
             'priority_id' => 'required',
             'category_id' => 'exists:categories',
-            'screenshot' => 'nullable'
         ];
+
+        $files = count($this->input('files'));
+        foreach(range(0, $files) as $index) {
+            $rules['file.' . $index] = 'image|mimes:jpeg,bmp,png|max:2000';
+        }
+
+        return $rules;
     }
 }

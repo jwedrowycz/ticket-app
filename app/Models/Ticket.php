@@ -38,6 +38,11 @@ class Ticket extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
     public function scopeWithFilters($query)
     {
         return $query->when(request()->query('status') != 0, function($q) {

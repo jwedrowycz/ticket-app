@@ -76,6 +76,15 @@
   height: 100%;
 }
 
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.preview-img {
+  height: auto;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

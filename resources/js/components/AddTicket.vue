@@ -23,10 +23,17 @@
                         <textarea type="text" class="form-control" v-model="ticket.descr"></textarea>
                         <div v-if="errors && errors.descr" class="text-danger">{{ errors.descr[0] }}</div>
                     </div>
-                    <div class="custom-file mb-3">
+                    <!-- <div class="custom-file mb-3">
                         <input type="file" id="customFile" class="custom-file-input" @change="onFileChange">
-                        <label for="customFile" class="custom-file-label" lang="pl"></label>
+                        <label for="customFile" class="custom-file-label" lang="pl">{{ screenshot_name }}</label>
                     </div>
+                     <div id="preview" class="preview-img">
+                        <img v-if="scr_url" :src="scr_url" />
+                    </div> -->
+                    <template>
+                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+                    </template>
+
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
             </div>
@@ -51,7 +58,13 @@
                 p_options: [],
                 loading: true,
                 errors: {},
-                screenshot: null,
+                dropzoneOptions: {
+                    url: '/api/tickets/' + this.category,
+                    thumbnailWidth: 100,
+                    thumbnailHeight: 100,
+                    maxFilesize: 0.5,
+                    headers: { "My-Awesome-Header": "header value" }
+                }
                 }
         },
         mounted () {
@@ -62,7 +75,6 @@
         methods: {
             addTicket() {
                 let formData = new FormData();
-                formData.append('screenshot', this.screenshot);
                 formData.append('title',this.ticket.title);
                 formData.append('priority_id',this.ticket.priority_id);
                 formData.append('descr',this.ticket.descr);
@@ -98,10 +110,12 @@
                 this.ticket.title = '';
                 this.ticket.descr = '';
             },
-            onFileChange(e){
-                console.log(e.target.files[0]);
-                this.screenshot = e.target.files[0];
-            },
+            // onFileChange(e){
+            //     console.log(e.target.files[0]);
+            //     this.screenshot = e.target.files[0];
+            //     this.screenshot_name = this.screenshot.name
+            //     this.scr_url = URL.createObjectURL(this.screenshot);
+            // },
         }
         
     }
