@@ -23,16 +23,15 @@
                         <textarea type="text" class="form-control" v-model="ticket.descr"></textarea>
                         <div v-if="errors && errors.descr" class="text-danger">{{ errors.descr[0] }}</div>
                     </div>
-                    <!-- <div class="custom-file mb-3">
-                        <input type="file" id="customFile" class="custom-file-input" @change="onFileChange">
-                        <label for="customFile" class="custom-file-label" lang="pl">{{ screenshot_name }}</label>
+                    <div class="custom-file mb-3">
+                        <input multiple type="file" id="customFile" class="custom-file-input" @change="onFileChange">
+                        <label for="customFile" class="custom-file-label" lang="pl"></label>
                     </div>
                      <div id="preview" class="preview-img">
-                        <img v-if="scr_url" :src="scr_url" />
-                    </div> -->
-                    <template>
-                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
-                    </template>
+                         <div v-for="file in files" class="" :key="file.name">
+                            <img v-if="file_urls" :src="file_url" />
+                         </div>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
@@ -58,13 +57,9 @@
                 p_options: [],
                 loading: true,
                 errors: {},
-                dropzoneOptions: {
-                    url: '/api/tickets/' + this.category,
-                    thumbnailWidth: 100,
-                    thumbnailHeight: 100,
-                    maxFilesize: 0.5,
-                    headers: { "My-Awesome-Header": "header value" }
-                }
+                files: {},
+                file_urls: {},
+                file_names: {},
                 }
         },
         mounted () {
@@ -78,6 +73,9 @@
                 formData.append('title',this.ticket.title);
                 formData.append('priority_id',this.ticket.priority_id);
                 formData.append('descr',this.ticket.descr);
+                for(let i=0; i<file.length; i++){
+                        formData.append('file[]', file[i])
+                    }
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
                         .post('/api/tickets/' + this.category, formData, {
@@ -110,12 +108,15 @@
                 this.ticket.title = '';
                 this.ticket.descr = '';
             },
-            // onFileChange(e){
-            //     console.log(e.target.files[0]);
-            //     this.screenshot = e.target.files[0];
-            //     this.screenshot_name = this.screenshot.name
-            //     this.scr_url = URL.createObjectURL(this.screenshot);
-            // },
+            onFileChange(e){
+                this.files = e.target.files;
+                for(var i=0; i<this.files.length; i++)
+                {
+                    this.file_names[i] = this.files[i].name;
+                }
+                // this.scr_url = URL.createObjectURL(this.screenshot);
+                console.log(this.flesj)
+            },
         }
         
     }
