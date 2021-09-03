@@ -30,12 +30,12 @@
                         </label>
                     </div>
                      <div id="preview" class="preview-img">
-                         <div v-for="(value, img) in file_props" class="" v-bind:key="value">
-                            <img :src="img" />
-                            <small>{{ value }}</small>   
+                         <div v-for="(file, index) in files" class="" v-bind:key="file.key">
+                            <img :src="file_urls[index]" />
+                            <small>{{ file.name }}</small>   
                          </div>
+
                     </div>
-                    {{ file_props }}
 
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
@@ -61,7 +61,7 @@
                 loading: true,
                 errors: {},
                 files: {},
-                file_props: {}
+                file_urls: {}
             }
         },
         mounted () {
@@ -75,10 +75,8 @@
                 formData.append('title',this.ticket.title);
                 formData.append('priority_id',this.ticket.priority_id);
                 formData.append('descr',this.ticket.descr);
-                formData.append('files', this.files);
-        
-                for(let i=0; i<file.length; i++){
-                        formData.append('file[]', file[i])
+                for(let i=0; i<this.files.length; i++){
+                        formData.append('file[]', this.files[i])
                     }
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
@@ -116,9 +114,8 @@
                 this.files = e.target.files;
                 for(var i=0; i<this.files.length; i++)
                 {
-                    this.file_props[this.files[i].name] = URL.createObjectURL(this.files[i]);
+                    this.file_urls[i] = URL.createObjectURL(this.files[i]);
                 }
-                console.log(this.file_props);
             },
         }
         
