@@ -50,12 +50,12 @@ class TicketController extends Controller
         ]);
         // if(isset($validated['screenshot'])){
 
-        //     $uploadedImage = UploadImage::upload($validated['screenshot'], 'app/public/screenshots', $validated['screenshot']->getClientOriginalExtension());
         //     $ticket->screenshot = $uploadedImage;
         //     $ticket->save();
         // }
-        foreach ($request->photos as $photo) {
-            $filename = $photo->store('photos');
+        // dd($validated['files']);
+        foreach ($validated['files'] as $key=>$file) {
+            $filename = $file->store('files');
             File::create([
                 'ticket_id' => $ticket->id,
                 'filename' => $filename

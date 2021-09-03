@@ -72,12 +72,13 @@
                 formData.append('priority_id',this.ticket.priority_id);
                 formData.append('descr',this.ticket.descr);
                 for(let i=0; i<this.files.length; i++){
-                        formData.append('file[]', this.files[i])
+                        formData.append('files[]', this.files[i], this.files[i].name)
                     }
+                    console.log(formData.get('files[]'))
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
                         .post('/api/tickets/' + this.category, formData, {
-                             headers: { 'content-type': 'multipart/form-data' }
+                             headers: { 'Content-Type': 'multipart/form-data' }
                         })
                         .then(response => (
                             this.$root.$emit('ticket_added'),
@@ -88,7 +89,7 @@
                             if (error.response.status == 422) {
                                 this.errors = error.response.data.errors;
                             } else {
-                                this.makeToast('Wystąpił nieoczekiwany błąd', 'Menadżer Zadań', 'danger');
+                                this.makeToast('Wystąpił nieoczekiwany błąd', 'Ticket-App', 'danger');
                             }
                         })
                         .finally(() => this.loading = false);

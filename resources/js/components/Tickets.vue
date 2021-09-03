@@ -52,8 +52,10 @@
             </template>
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
-                <template v-if="row.item.screenshot">
-                    <img class="img-thumbnail" :src="'/storage/screenshots/' + row.item.screenshot">
+                <template v-if="row.item.files">
+                    <template v-for="file in row.item.files" >
+                        <img v-bind:key="file.filename" class="img-thumbnail" :src="'/storage/' + file.filename">
+                    </template>
                 </template>
             </template>
         </b-table>
