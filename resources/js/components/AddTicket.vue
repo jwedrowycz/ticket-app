@@ -29,12 +29,8 @@
                           
                         </label>
                     </div>
-                     <div id="preview" class="preview-img">
-                         <div v-for="(file, index) in files" class="" v-bind:key="file.key">
-                            <img :src="file_urls[index]" />
-                            <small>{{ file.name }}</small>   
-                         </div>
-
+                    <div v-for="(file) in files" class="" v-bind:key="file.key">
+                        <p>{{ file.name }}</p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
