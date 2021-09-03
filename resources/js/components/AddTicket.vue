@@ -6,12 +6,13 @@
                 <form @submit.prevent="addTicket">
                     <div class="form-group">
                         <label>Priorytet</label>
+                        <!-- <b-form-select v-model="tickets.priority_id" :options="options"></b-form-select> -->
                         <select class="form-control" v-model="ticket.priority_id">
-                        <option v-for="option in p_options" v-bind:value="option.id" :key="option.id">
-                            {{ option.state }}
-                        </option>
+                            <option v-for="option in p_options" v-bind:value="option.id" :key="option.id">
+                                {{ option.state }}
+                            </option>
                         </select>
-                        <div v-if="errors && errors.state" class="text-danger">{{ errors.state[0] }}</div>
+                        <div v-if="errors && errors.priority_id" class="text-danger">{{ errors.priority_id[0] }}</div>
                     </div>
                     <div class="form-group">
                         <label>Tytuł</label>
@@ -31,6 +32,7 @@
                     </div>
                     <div v-for="(file) in files" class="" v-bind:key="file.key">
                         <p>{{ file.name }}</p>
+                        <div v-if="errors && errors.files" class="text-danger">{{ errors.files[0] }}</div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
@@ -51,8 +53,6 @@
         data() {
             return {
                 ticket: {},
-                s_options: {},
-                selected: null,
                 p_options: [],
                 loading: true,
                 errors: {},
@@ -68,9 +68,13 @@
         methods: {
             addTicket() {
                 let formData = new FormData();
-                formData.append('title',this.ticket.title);
-                formData.append('priority_id',this.ticket.priority_id);
-                formData.append('descr',this.ticket.descr);
+                if(this.ticket.title != null || this.ticket.priority_id != null || this.ticket.descr != null)
+                {
+                    formData.append('title',this.ticket.title);
+                    formData.append('priority_id',this.ticket.priority_id);
+                    formData.append('descr',this.ticket.descr);
+
+                }
                 for(let i=0; i<this.files.length; i++){
                         formData.append('files[]', this.files[i], this.files[i].name)
                     }

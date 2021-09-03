@@ -48,12 +48,7 @@ class TicketController extends Controller
             'status_id' => 1,
             'category_id' => $category->id,
         ]);
-        // if(isset($validated['screenshot'])){
 
-        //     $ticket->screenshot = $uploadedImage;
-        //     $ticket->save();
-        // }
-        // dd($validated['files']);
         foreach ($validated['files'] as $key=>$file) {
             $filename = $file->store('files');
             File::create([

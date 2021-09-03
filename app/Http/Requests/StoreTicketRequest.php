@@ -30,10 +30,6 @@ class StoreTicketRequest extends FormRequest
             'category_id' => 'exists:categories',
             'files.*' => 'mimes:jpg,png,jpeg|max:2000|nullable'
         ];
-        // $files = count($this->file('files'));
-        // foreach(range(0, $files-1) as $index) {
-        //     $rules['file.' . $index] = 'image|mimes:jpeg,bmp,png|max:2000|nullable';
-        // }
 
         return $rules;
     }
