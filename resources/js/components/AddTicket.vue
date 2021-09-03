@@ -25,13 +25,17 @@
                     </div>
                     <div class="custom-file mb-3">
                         <input multiple type="file" id="customFile" class="custom-file-input" @change="onFileChange">
-                        <label for="customFile" class="custom-file-label" lang="pl"></label>
+                        <label for="customFile" class="custom-file-label" lang="pl">
+                          
+                        </label>
                     </div>
                      <div id="preview" class="preview-img">
-                         <div v-for="file in files" class="" :key="file.name">
-                            <img v-if="file_urls" :src="file_url" />
+                         <div v-for="(value, img) in file_props" class="" v-bind:key="value">
+                            <img :src="img" />
+                            <small>{{ value }}</small>   
                          </div>
                     </div>
+                    {{ file_props }}
 
                     <button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button>
                 </form>
@@ -51,16 +55,14 @@
         data() {
             return {
                 ticket: {},
-                // p_options: {},
                 s_options: {},
                 selected: null,
                 p_options: [],
                 loading: true,
                 errors: {},
                 files: {},
-                file_urls: {},
-                file_names: {},
-                }
+                file_props: {}
+            }
         },
         mounted () {
             axios.get('/api/priorities').then(response => {
@@ -73,6 +75,8 @@
                 formData.append('title',this.ticket.title);
                 formData.append('priority_id',this.ticket.priority_id);
                 formData.append('descr',this.ticket.descr);
+                formData.append('files', this.files);
+        
                 for(let i=0; i<file.length; i++){
                         formData.append('file[]', file[i])
                     }
@@ -112,10 +116,9 @@
                 this.files = e.target.files;
                 for(var i=0; i<this.files.length; i++)
                 {
-                    this.file_names[i] = this.files[i].name;
+                    this.file_props[this.files[i].name] = URL.createObjectURL(this.files[i]);
                 }
-                // this.scr_url = URL.createObjectURL(this.screenshot);
-                console.log(this.flesj)
+                console.log(this.file_props);
             },
         }
         
