@@ -72,9 +72,10 @@ $ php artisan migrate --seed
 - Tickets have:
   - three priorities: *low*, *medium* and *high*
   - three statuses: *sent*, *realized*, *completed*
-   <!-- - categories: *malfunction*, *order*, *question* -->
+  - attachements *(jpg, png, jpeg)*
+  - categories: *malfunctions*, *orders* and *questions*
 - Notifications about states of tickets and new tickets
-- Ticket's status filters
+- Ticket's status and priority filters
 
 ## TODO
 
@@ -83,7 +84,7 @@ $ php artisan migrate --seed
 - [x] Ticket categories
 - [ ] Ticket comments
 - [x] Priority filter
-- [ ] Screenshots for tickets
+- [x] Attachements for tickets
 
 ## License
 
