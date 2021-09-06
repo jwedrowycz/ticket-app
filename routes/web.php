@@ -21,9 +21,11 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::view('/incidents', 'incidents')->name('incidents');
-Route::view('/orders', 'orders')->name('orders');
-Route::view('/questions', 'questions')->name('questions');
+Route::middleware(['auth'])->group(function () {
+    Route::view('/incidents', 'incidents')->name('incidents');
+    Route::view('/orders', 'orders')->name('orders');
+    Route::view('/questions', 'questions')->name('questions');
+});
 
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {

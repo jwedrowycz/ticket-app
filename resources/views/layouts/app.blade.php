@@ -52,15 +52,17 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li>
-                            <a href="{{ route('incidents') }}" class="nav-link {{ request()->routeIs('incidents') ? 'active' : '' }}">{{ __('Awarie') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('orders') }}" class="nav-link {{ request()->routeIs('orders') ? 'active' : '' }}">{{ __('Zapotrzebowanie') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('questions') }}" class="nav-link {{ request()->routeIs('questions') ? 'active' : '' }}">{{ __('Pytania') }}</a>
-                        </li>
+                        @auth
+                            <li>
+                                <a href="{{ route('incidents') }}" class="nav-link {{ request()->routeIs('incidents') ? 'active' : '' }}">{{ __('Awarie') }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('orders') }}" class="nav-link {{ request()->routeIs('orders') ? 'active' : '' }}">{{ __('Zapotrzebowanie') }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('questions') }}" class="nav-link {{ request()->routeIs('questions') ? 'active' : '' }}">{{ __('Pytania') }}</a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

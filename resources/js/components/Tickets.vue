@@ -52,11 +52,11 @@
             </template>
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
-                <template v-if="row.item.files">
-                    <template v-for="file in row.item.files" >
-                        <img v-bind:key="file.filename" class="img-thumbnail" :src="'/storage/' + file.filename">
-                    </template>
-                </template>
+                <div class="d-flex flex-row" v-if="row.item.files">
+                    <div v-for="file in row.item.files" v-bind:key="file">
+                        <img v-bind:key="file.filename" class="thumbnail p-2" :src="'/storage/' + file.filename">
+                    </div>
+                </div>
             </template>
         </b-table>
         <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>
