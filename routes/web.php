@@ -30,4 +30,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::view('/dashboard', 'admin.dashboard')->name('index');
+    Route::view('/register-user', 'admin.register')->name('register_user');
 });

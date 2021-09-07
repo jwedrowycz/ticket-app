@@ -10,6 +10,7 @@ use App\Models\Priority;
 use App\Models\Ticket;
 use App\Services\UploadImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 class TicketController extends Controller
 {
@@ -105,7 +106,7 @@ class TicketController extends Controller
         {
             abort(403);
         }
-
+        File::delete($ticket->files);
         $ticket->delete();
         return response()->json(null, 204);
     }

@@ -110,6 +110,7 @@
             resetInput() {
                 this.ticket.title = '';
                 this.ticket.descr = '';
+                this.files = {};
             },
             onFileChange(e){
                 this.files = e.target.files;

@@ -52,7 +52,8 @@
             </template>
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
-                <div class="d-flex flex-row" v-if="row.item.files">
+                <div class="d-flex flex-row" v-if="row.item.files.length">
+                    <p><b>Załączniki: </b></p>
                     <div v-for="file in row.item.files" v-bind:key="file">
                         <img v-bind:key="file.filename" class="thumbnail p-2" :src="'/storage/' + file.filename">
                     </div>
