@@ -17,7 +17,7 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('filename');
-            $table->foreignId('ticket_id')->constrained();
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
         });
     }
 

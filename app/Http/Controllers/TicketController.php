@@ -106,7 +106,7 @@ class TicketController extends Controller
         {
             abort(403);
         }
-        File::delete($ticket->files);
+        // File::delete($ticket->files); TODO: POPRAWIĆ
         $ticket->delete();
         return response()->json(null, 204);
     }
