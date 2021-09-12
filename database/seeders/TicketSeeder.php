@@ -42,6 +42,15 @@ class TicketSeeder extends Seeder
                 'status_id' => 1,
                 'priority_id' => 1,
                 'category_id' => 3,
+            ],   
+            [
+                'title' => 'Program Płatnik nie działa',
+                'descr' => 'Program od dzisiaj nie chce działać, nie chce się włączyć, wyskakuje błąd',
+                'created_at' => Carbon::now(),
+                'user_id' => 3,
+                'status_id' => 1,
+                'priority_id' => 1,
+                'category_id' => 1,
             ],             
         ]);
     }
