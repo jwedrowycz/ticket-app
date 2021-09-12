@@ -108,10 +108,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @hasrole('admin')
+                                        <a class="dropdown-item" href="{{ route('admin.register_user') }}">
+                                            {{ __('Dodaj użytkownika') }}
+                                        </a>
+                                    @endhasrole
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Wyloguj') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

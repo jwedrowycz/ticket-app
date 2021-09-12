@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::view('/dashboard', 'admin.dashboard')->name('index');
-    Route::view('/register-user', 'admin.register')->name('register_user');
+    Route::view('/register-user', 'auth.register')->name('register_user');
 });
