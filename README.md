@@ -80,12 +80,13 @@ $ php artisan migrate --seed
 ## TODO
 
 - [ ] Mark notifications as read
-- [ ] Real-time notifications
+- [ ] ~~Real-time notifications~~
 - [x] Ticket categories
-- [ ] Ticket comments
+- [x] Ticket comments
 - [x] Priority filter
 - [x] Attachements for tickets
 
 ## License
 
 MIT
+

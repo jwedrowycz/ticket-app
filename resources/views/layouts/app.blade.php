@@ -28,7 +28,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     @auth
-        <script>window.authUser={!! json_encode(auth()->user()); !!};</script>
+        <script>window.authUser={!! json_encode(auth()->id()); !!};</script>
         @hasrole('admin')
             <script>window.adminUser={!! json_encode(auth()->user()->hasRole('admin')); !!};</script>
         @else

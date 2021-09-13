@@ -28,7 +28,7 @@ class StoreTicketRequest extends FormRequest
             'descr' => 'required',
             'priority_id' => 'required',
             'category_id' => 'exists:categories',
-            'files.*' => 'mimes:jpg,png,jpeg|max:2000|nullable'
+            'files.*' => 'nullable|mimes:jpg,png,jpeg|max:2000'
         ];
 
         return $rules;

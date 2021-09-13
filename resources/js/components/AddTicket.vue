@@ -73,19 +73,19 @@
                     formData.append('title',this.ticket.title);
                     formData.append('priority_id',this.ticket.priority_id);
                     formData.append('descr',this.ticket.descr);
+                    formData.append('files[]', {});
 
                 }
                 for(let i=0; i<this.files.length; i++){
                         formData.append('files[]', this.files[i], this.files[i].name)
                     }
-                    console.log(formData.get('files[]'))
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
                         .post('/api/tickets/' + this.category, formData, {
                              headers: { 'Content-Type': 'multipart/form-data' }
                         })
                         .then(response => (
-                            this.$root.$emit('ticket_added'),
+                            this.$root.$emit('refresh_data'),
                             this.makeToast('Pomyślnie dodano zgłoszenie', 'Zgłoszenie', 'success'),
                             this.resetInput()
                         ))

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Comment;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TicketResource extends JsonResource
@@ -23,7 +24,9 @@ class TicketResource extends JsonResource
             'priority'     => $this->priority->state,
             'color'        => $this->priority->color,
             'user'         => $this->user->name,
-            'files'        => $this->files
+            'user_id'      => $this->user->id,
+            'files'        => $this->files,
+            'comments'     => CommentResource::collection($this->whenLoaded('comments'))
         ];
     }
 }

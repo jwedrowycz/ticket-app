@@ -57,7 +57,28 @@
                     <div v-for="file in row.item.files" v-bind:key="file">
                         <img v-bind:key="file.filename" class="thumbnail p-2" :src="'/storage/' + file.filename">
                     </div>
+                    <!-- <div v-if="comments"> -->
+                      
+                    <!-- </div>   -->
                 </div>
+                <div class="d-flex flex-column" v-if="row.item.comments.length">
+                    <h5>Komentarze</h5>
+                    <div v-if="authUser == row.item.user_id || adminUser">
+                        <b-button v-b-modal.modal-comment variant="outline-secondary">Dodaj komentarz</b-button>
+                        <comment-form-component :ticket_title="row.item.title" :ticket_id="row.item.id"></comment-form-component>
+                    </div>
+                    <div v-for="comment in row.item.comments" v-bind:key="comment">
+                        <div class="bg-light p-3 mb-2 rounded d-flex justify-content-between">
+                            <div>
+                                <b>{{ comment.user }}</b>:&nbsp;{{ comment.content }}
+                            </div>
+                            <div>
+                                <small>{{ comment.created_at }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
             </template>
         </b-table>
         <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>
@@ -84,14 +105,16 @@ export default {
                     { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
                     { key: 'status', label: 'Status' },
                     { key: 'user', label: 'Użytkownik' },
+                    { key: 'user_id', tdClass: 'd-none', thClass: 'd-none' },
                     { key: 'actions', label: 'Akcje' },
                 ],
             adminUser: window.adminUser,
+            authUser: window.authUser
         }
     },
     mounted () {
         this.loadTickets();
-        this.$root.$on('ticket_added', () => { 
+        this.$root.$on('refresh_data', () => { 
             this.loadTickets();
         });
     },
