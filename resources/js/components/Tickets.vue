@@ -30,8 +30,7 @@
             </template>
             <template #cell(actions)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                    <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
-                    Pokaż Opis
+                    {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
                 </b-button>
                 <template v-if="authUser == row.item.user_id || adminUser">
                     <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
