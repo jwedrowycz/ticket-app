@@ -33,20 +33,22 @@
                     <!-- {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis -->
                     Pokaż Opis
                 </b-button>
-                <template v-if="!adminUser">
+                <template v-if="authUser == row.item.user_id || adminUser">
                     <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
                         Usuń
                     </b-button>
                 </template>
-                <template v-if="adminUser && row.item.status == 'Wysłane'">
-                    <b-button size="sm" variant="info" @click="pursueTicket(row.item.id)">
-                        Realizuj
-                    </b-button>
-                </template>
-                <template v-if="adminUser && row.item.status == 'W realizacji'">
-                    <b-button size="sm" variant="success" @click="completeTicket(row.item.id)">
-                        Zakończ
-                    </b-button>
+                <template v-if="adminUser">
+                    <template v-if="row.item.status == 'Wysłane'">
+                        <b-button size="sm" variant="info" @click="pursueTicket(row.item.id)">
+                            Realizuj
+                        </b-button>
+                    </template>
+                    <template v-if="row.item.status == 'W realizacji'">
+                        <b-button size="sm" variant="success" @click="completeTicket(row.item.id)">
+                            Zakończ
+                        </b-button>
+                    </template>
                 </template>
                 <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
             </template>
@@ -57,18 +59,15 @@
                     <div v-for="file in row.item.files" v-bind:key="file">
                         <img v-bind:key="file.filename" class="thumbnail p-2" :src="'/storage/' + file.filename">
                     </div>
-                    <!-- <div v-if="comments"> -->
-                      
-                    <!-- </div>   -->
+                </div>
+                <div class="my-2" v-if="authUser == row.item.user_id || adminUser">
+                    <b-button v-b-modal.modal-comment variant="outline-secondary">Dodaj komentarz</b-button>
+                    <comment-form-component :ticket_title="row.item.title" :ticket_id="row.item.id"></comment-form-component>
                 </div>
                 <div class="d-flex flex-column" v-if="row.item.comments.length">
-                    <h5>Komentarze</h5>
-                    <div v-if="authUser == row.item.user_id || adminUser">
-                        <b-button v-b-modal.modal-comment variant="outline-secondary">Dodaj komentarz</b-button>
-                        <comment-form-component :ticket_title="row.item.title" :ticket_id="row.item.id"></comment-form-component>
-                    </div>
+                <h5>Komentarze</h5>
                     <div v-for="comment in row.item.comments" v-bind:key="comment">
-                        <div class="bg-light p-3 mb-2 rounded d-flex justify-content-between">
+                        <div class="bg-light p-3 mb-2 rounded d-flex justify-content-between" >
                             <div>
                                 <b>{{ comment.user }}</b>:&nbsp;{{ comment.content }}
                             </div>
@@ -78,7 +77,6 @@
                         </div>
                     </div>
                 </div>
-               
             </template>
         </b-table>
         <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>

@@ -50,12 +50,15 @@ class TicketController extends Controller
             'category_id' => $category->id,
         ]);
 
-        foreach ($validated['files'] as $key=>$file) {
-            $filename = $file->store('files');
-            File::create([
-                'ticket_id' => $ticket->id,
-                'filename' => $filename
-            ]);
+        if(isset($validated['files'])){
+            foreach ($validated['files'] as $key=>$file) {
+                $filename = $file->store('files');
+                File::create([
+                    'ticket_id' => $ticket->id,
+                    'filename' => $filename
+                ]);
+            }
+            
         }
         return response()->json($ticket, 201);
     }

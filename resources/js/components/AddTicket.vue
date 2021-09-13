@@ -73,7 +73,6 @@
                     formData.append('title',this.ticket.title);
                     formData.append('priority_id',this.ticket.priority_id);
                     formData.append('descr',this.ticket.descr);
-                    formData.append('files[]', {});
 
                 }
                 for(let i=0; i<this.files.length; i++){
