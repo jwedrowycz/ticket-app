@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Services\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File as FacadesFile;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -105,11 +106,10 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        if($ticket->user_id != auth()->id())
-        {
+        if($ticket->user_id != auth()->id()) 
             abort(403);
-        }
-        // File::delete($ticket->files); TODO: POPRAWIĆ
+        $files = explode(",", $ticket->files);
+        Storage::delete($files);
         $ticket->delete();
         return response()->json(null, 204);
     }

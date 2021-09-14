@@ -62,6 +62,11 @@
                             <li>
                                 <a href="{{ route('questions') }}" class="nav-link {{ request()->routeIs('questions') ? 'active' : '' }}">{{ __('Pytania') }}</a>
                             </li>
+                            @hasrole('admin')
+                            <li>
+                                <a  href="{{ route('admin.users') }}" class="nav-link text-primary {{ request()->routeIs('admin.users') ? 'active' : '' }}">{{ __('Użytkownicy') }}</a>
+                            </li>
+                            @endhasrole
                         @endauth
                     </ul>
 

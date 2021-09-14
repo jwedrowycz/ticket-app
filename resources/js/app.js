@@ -13,6 +13,7 @@ Vue.component('tickets-component', require('./components/Tickets.vue').default);
 Vue.component('add-ticket-component', require('./components/AddTicket.vue').default);
 Vue.component('comment-form-component', require('./components/CommentForm.vue').default);
 Vue.component('add-user-component', require('./components/AddUser.vue').default);
+Vue.component('users-component', require('./components/Users.vue').default);
 
 
 /**

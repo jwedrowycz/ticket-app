@@ -38,4 +38,5 @@ Route::middleware(['auth', 'first_login'])->group(function () {
 Route::name('admin.')->prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::view('/dashboard', 'admin.dashboard')->name('index');
     Route::view('/register-user', 'auth.register')->name('register_user');
+    Route::view('/users', 'admin.users')->name('users');
 });

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Admin\TicketController as AdminTicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Priority;
@@ -31,14 +33,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('tickets/{id}/comments', [CommentController::class, 'store']);
 });
 
-Route::middleware('role:admin', 'auth:sanctum')->prefix('admin')->group(function () {
-    Route::put('tickets/pursue/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'pursue']);
-    Route::put('tickets/complete/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'complete']);
+Route::middleware('role:admin')->prefix('admin')->group(function () {
+    Route::put('tickets/pursue/{ticket}', [AdminTicketController::class, 'pursue']);
+    Route::put('tickets/complete/{ticket}', [AdminTicketController::class, 'complete']);
+
+    Route::post('/register-user', [RegisterController::class, 'register']);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 });
 
-Route::middleware('role:admin')->group(function () {
-    Route::post('/register-user', [RegisterController::class, 'register']);
-});
 
 Route::get('priorities', function () {
     return response()->json(Priority::all(), 201);
