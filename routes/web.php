@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::view('/reset-password', 'auth.passwords.reset')->name('reset_password');
+Route::post('/update-password', [ResetPasswordController::class, 'update'])->name('update_password');
 
-Route::middleware(['auth'])->group(function () {
+
+Route::middleware(['auth', 'first_login'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::view('/incidents', 'incidents')->name('incidents');
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/questions', 'questions')->name('questions');

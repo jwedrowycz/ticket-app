@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Http\Request;
@@ -19,10 +20,6 @@ use Spatie\Permission\Models\Role;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /* Ticket */
 Route::get('tickets/{categoryName}', [TicketController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -34,9 +31,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('tickets/{id}/comments', [CommentController::class, 'store']);
 });
 
-Route::middleware('role:admin')->prefix('admin')->group(function () {
+Route::middleware('role:admin', 'auth:sanctum')->prefix('admin')->group(function () {
     Route::put('tickets/pursue/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'pursue']);
     Route::put('tickets/complete/{ticket}', [App\Http\Controllers\Admin\TicketController::class, 'complete']);
+});
+
+Route::middleware('role:admin')->group(function () {
+    Route::post('/register-user', [RegisterController::class, 'register']);
 });
 
 Route::get('priorities', function () {
