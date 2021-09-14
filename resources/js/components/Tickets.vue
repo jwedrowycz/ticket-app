@@ -100,6 +100,7 @@ export default {
                     { key: 'title', label: 'Tytuł' },
                     { key: 'created_at', label: 'Data zgłoszenia'},
                     { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
+                    { key: 'category', label: 'Kategoria', },
                     { key: 'status', label: 'Status' },
                     { key: 'user', label: 'Użytkownik' },
                     { key: 'user_id', tdClass: 'd-none', thClass: 'd-none' },

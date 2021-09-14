@@ -23,7 +23,7 @@ class TicketController extends Controller
     public function index($categoryName = null)
     {
         return TicketResource::collection(
-            Ticket::with(['priority', 'status', 'user', 'files', 'comments', 'comments.user'])
+            Ticket::with(['priority', 'status', 'user', 'files', 'comments', 'comments.user', 'category'])
                     ->withFilters()
                     ->withCategory(Category::where('name', $categoryName)->first())
                     ->latest()
