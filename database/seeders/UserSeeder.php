@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,16 +22,19 @@ class UserSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@ticket-app.pl',
                 'password' => Hash::make('qweqweqwe'),
+                'created_at' => Carbon::now(),
             ],               
             [
                 'name' => 'Jakub Kopniewski',
                 'email' => 'jakub@test.com',
                 'password' => Hash::make('qweqweqwe'),
+                'created_at' => Carbon::now(),
             ],   
             [
                 'name' => 'Adam Nowak',
                 'email' => 'adam@test.com',
                 'password' => Hash::make('qweqweqwe'),
+                'created_at' => NULL,
             ],               
         ]);
     }
