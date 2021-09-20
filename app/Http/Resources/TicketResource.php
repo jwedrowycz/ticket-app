@@ -14,7 +14,7 @@ class TicketResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    {   #TODO: poprawić, coś z softdeletes
         return [
             'id'           => $this->id,
             'title'        => $this->title,

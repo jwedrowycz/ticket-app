@@ -71,6 +71,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        foreach($user->tickets as $ticket)
+        {
+            $ticket->delete();
+        }
         $user->delete();
         return response()->json(null, 204);
     }

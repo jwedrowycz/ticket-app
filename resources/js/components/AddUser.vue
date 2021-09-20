@@ -49,7 +49,7 @@
             addUser() {
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios
-                        .post('/api/register-user',  this.user, {
+                        .post('/api/admin/register-user',  this.user, {
                              headers: { 'Accept': 'application/json' }})
                         .then(response => (
                             // this.$root.$emit('refresh_data'),
