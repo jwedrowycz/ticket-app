@@ -14,6 +14,7 @@ Vue.component('add-ticket-component', require('./components/AddTicket.vue').defa
 Vue.component('comment-form-component', require('./components/CommentForm.vue').default);
 Vue.component('add-user-component', require('./components/AddUser.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
+Vue.component('show-ticket-component', require('./components/ShowTicket.vue').default);
 
 
 /**

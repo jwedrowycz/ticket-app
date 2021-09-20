@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Routing\Route;
 
 class StateChanged extends Notification
 {
@@ -73,6 +74,8 @@ class StateChanged extends Notification
     //     return new BroadcastMessage([
     //         'ticket_id' => $this->ticket->id,
     //         'state' => $this->ticket->state,
+    // 'link' => url("/ticket/{$this->ticket->id}")
+
     //     ]);
     // }
 }

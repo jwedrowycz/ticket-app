@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Notifications\StateChanged;
+use App\Notifications\TicketCreated;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -18,7 +19,7 @@ class TicketObserver
      */
     public function created(Ticket $ticket)
     {
-        $notification = new StateChanged($ticket, 'Wysłano nowe zgłosznie: <b>'.  $ticket->title . '</b>');
+        $notification = new TicketCreated($ticket, 'Wysłano nowe zgłosznie: <b>'.  $ticket->title . '</b>');
 
         $admins = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'admin');

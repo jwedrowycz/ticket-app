@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RegisterController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,7 @@ Route::middleware(['auth', 'first_login'])->group(function () {
     Route::view('/incidents', 'incidents')->name('incidents');
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/questions', 'questions')->name('questions');
+    Route::get('/ticket/{ticket}/{notify_id?}', [TicketController::class, 'show'])->name('ticket_show');
 });
 
 

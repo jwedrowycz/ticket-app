@@ -97,8 +97,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach(auth()->user()->unreadNotifications->take(5) as $notification)
-                                    <a class="dropdown-item" href="">
+                                    @foreach(auth()->user()->notifications->take(5) as $notification)
+                                    <a class="dropdown-item {{ $notification->unread() ? 'bg-l-blue' : ''  }}" href="{{ route('ticket_show', ['ticket' => $notification->data['ticket_id'], 'notify_id'=> $notification->id]) }}">
                                         <p>{!! $notification->data['message']; !!}</p>
                                         <small>{{ $notification->created_at; }}</small>
                                     </a>
