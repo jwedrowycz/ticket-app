@@ -10,13 +10,10 @@
     <title>
         @yield('title')
         @auth
-            @if(count(auth()->user()->unreadNotifications) > 0)
-                @if(count(auth()->user()->unreadNotifications) > 10)    
-                    10+
-                @else
-                    ({{ count(auth()->user()->unreadNotifications) }})
-
-                @endif
+            @if(count(auth()->user()->unreadNotifications) > 10)
+                10+
+            @elseif(count(auth()->user()->unreadNotifications) > 10)
+                {{ count(auth()->user()->unreadNotifications) }}
             @endif
         @endauth
         | {{ config('app.name', 'Laravel') }}
@@ -95,9 +92,11 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="bi bi-bell"></i>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                            @if(count(auth()->user()->unreadNotifications) > 0)
-                                                {{ count(auth()->user()->unreadNotifications) }}
-                                            @endif
+                                        @if(count(auth()->user()->unreadNotifications) > 10)
+                                            10+
+                                        @elseif(count(auth()->user()->unreadNotifications) > 10)
+                                            {{ count(auth()->user()->unreadNotifications) }}
+                                        @endif
                                     </span>
                                 </a>
 
