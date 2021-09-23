@@ -11,7 +11,12 @@
         @yield('title')
         @auth
             @if(count(auth()->user()->unreadNotifications) > 0)
-                ({{ count(auth()->user()->unreadNotifications) }})
+                @if(count(auth()->user()->unreadNotifications) > 10)    
+                    10+
+                @else
+                    ({{ count(auth()->user()->unreadNotifications) }})
+
+                @endif
             @endif
         @endauth
         | {{ config('app.name', 'Laravel') }}

@@ -21,6 +21,12 @@
         </div>
         
     </div>
+        <pagination 
+            :data="tickets" 
+            @pagination-change-page="loadTickets"
+            :limit="10"
+        >
+        </pagination>
         <b-table :items="tickets.data" :fields="fields" :busy="isBusy" bordered head-variant="light" responsive="sm" class="bg-white" >
             <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -29,22 +35,22 @@
                 </div>
             </template>
             <template #cell(actions)="row">
-                <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+                <b-button size="sm" @click="row.toggleDetails" class="mb-1">
                     {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
                 </b-button>
                 <template v-if="authUser == row.item.user_id || adminUser">
-                    <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
+                    <b-button block size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mb-1">
                         Usuń
                     </b-button>
                 </template>
                 <template v-if="adminUser">
                     <template v-if="row.item.status == 'Wysłane'">
-                        <b-button size="sm" variant="info" @click="pursueTicket(row.item.id)">
+                        <b-button block size="sm" variant="info" @click="pursueTicket(row.item.id)" class="mb-1">
                             Realizuj
                         </b-button>
                     </template>
                     <template v-if="row.item.status == 'W realizacji'">
-                        <b-button size="sm" variant="success" @click="completeTicket(row.item.id)">
+                        <b-button block size="sm" variant="success" @click="completeTicket(row.item.id)" class="mb-1">
                             Zakończ
                         </b-button>
                     </template>
