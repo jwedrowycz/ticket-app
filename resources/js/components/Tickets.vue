@@ -78,7 +78,12 @@
                 </div>
             </template>
         </b-table>
-        <pagination :data="tickets" @pagination-change-page="loadTickets"></pagination>
+        <pagination 
+            :data="tickets" 
+            @pagination-change-page="loadTickets"
+            :limit="10"
+        >
+        </pagination>
     </div>
 </template>
 
