@@ -38,11 +38,6 @@
                 <b-button size="sm" @click="row.toggleDetails" class="mb-1">
                     {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
                 </b-button>
-                <template v-if="authUser == row.item.user_id || adminUser">
-                    <b-button block size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mb-1">
-                        Usuń
-                    </b-button>
-                </template>
                 <template v-if="adminUser">
                     <template v-if="row.item.status == 'Wysłane'">
                         <b-button block size="sm" variant="info" @click="pursueTicket(row.item.id)" class="mb-1">
@@ -54,8 +49,11 @@
                             Zakończ
                         </b-button>
                     </template>
+                    <b-button block size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mb-1">
+                        Usuń
+                    </b-button>
+                    <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
                 </template>
-                <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteTicket(row.item.id)" >Czy na pewno chcesz usunąć te zgłoszenie?</b-modal>
             </template>
             <template #row-details="row">
                 <p><b>Opis: </b>{{ row.item.descr }}</p>
