@@ -16,7 +16,6 @@ Vue.component('add-user-component', require('./components/AddUser.vue').default)
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('show-ticket-component', require('./components/ShowTicket.vue').default);
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

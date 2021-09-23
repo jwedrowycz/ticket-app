@@ -29,8 +29,6 @@
         "bootstrap-vue": "^2.21.2",
         "laravel-vue-pagination": "^2.3.1",
         "vue-file-agent": "^1.7.3",
-        "vue-router": "^3.5.2",
-        "vue-upload-component": "^2.8.22",
-        "vue2-dropzone": "^3.6.0"
+        "vue-router": "^3.5.2"
     }
 }
