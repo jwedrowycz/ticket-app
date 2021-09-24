@@ -34,6 +34,14 @@
                     <strong>Ładowanie...</strong>
                 </div>
             </template>
+            <template #cell(title)="row">
+                <div>
+                    {{ row.item.title }}
+                </div>
+                <div class="mt-5 text-grey">
+                    <b>Komentarze ({{ row.item.comments_count }})</b>
+                </div>
+            </template>
             <template #cell(actions)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mb-1">
                     {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
@@ -106,7 +114,7 @@ export default {
             priority: 0,
             fields: [
                     { key: 'id', label: 'Id zgłoszenia' },
-                    { key: 'title', label: 'Tytuł' },
+                    { key: 'title', label: 'Tytuł'},
                     { key: 'created_at', label: 'Data zgłoszenia'},
                     { key: 'priority', label: 'Priorytet', tdClass: "addTdClass"},
                     { key: 'category', label: 'Kategoria', },

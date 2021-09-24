@@ -27,7 +27,11 @@ class TicketResource extends JsonResource
             'user'         => $this->user->name,
             'user_id'      => $this->user->id,
             'files'        => $this->files,
-            'comments'     => CommentResource::collection($this->whenLoaded('comments')->sortByDesc('created_at'))
+            'comments'     => CommentResource::collection($this->whenLoaded('comments')->sortByDesc('created_at')),
+            'comments_count' => $this->whenLoaded('comments', function () {
+                return $this->comments->count();
+            })
+            
         ];
     }
 }
