@@ -72,7 +72,6 @@
                             close-on-background-click="true"
                             :src="'/storage/' + file.filename"
                         />
-                        <!-- <img v-bind:key="file.filename" class="thumbnail p-2" :src="'/storage/' + file.filename"> -->
                     </div>
                 </div>
                 <div class="my-2" v-if="authUser == row.item.user_id || adminUser">
