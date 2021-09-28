@@ -25,6 +25,7 @@ Application is created with following technologies:
 
 - [PHP 7.x](https://www.php.net/downloads.php) / [Laravel 8.x](https://laravel.com/docs/8.x/installation)
 - [Sanctum](https://laravel.com/docs/8.x/sanctum)
+- [Laravel Permission](https://spatie.be/docs/laravel-permission/v5/introduction)
 - MySQL database
 
 **Frontend**:
