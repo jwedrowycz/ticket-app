@@ -79,7 +79,7 @@ Default admin login:password is *admin@example.com:qweqweqwe*
   - three statuses: *sent*, *realized*, *completed*
   - attachements *(jpg, png, jpeg)*
   - categories: *malfunctions*, *orders* and *questions*
-  - comments
+  - ticket comments
 - Notifications about states of tickets and new tickets
 - Ticket's status and priority filters
 
