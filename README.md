@@ -15,11 +15,11 @@ A simple application to receive tickets for the help desk and administration sec
 
 ## General info
 
-This application is a tool mainly for help desk and administration sections in variety companies. It allows to easily manage malfunctions and track progress of a reports.
+This application is a tool mainly for help desk and administration sections in variety companies. It allows to easily manage malfunctions and track progress of the reports.
 
 ## Technologies
 
-Applications is created with following technologies:
+Application is created with following technologies:
 
 **Backend**:
 
@@ -66,7 +66,7 @@ $ php artisan migrate --seed
 
 ## Features
 
-- Login system with registration new users
+- Login system with registration of new users
 - Send tickets
 - Receive tickets
 - Tickets have:
@@ -74,12 +74,13 @@ $ php artisan migrate --seed
   - three statuses: *sent*, *realized*, *completed*
   - attachements *(jpg, png, jpeg)*
   - categories: *malfunctions*, *orders* and *questions*
+  - comments
 - Notifications about states of tickets and new tickets
 - Ticket's status and priority filters
 
 ## TODO
 
-- [ ] Mark notifications as read
+- [ ] Mark notifications as read (generally working, but some fixes must be done)
 - [x] Ticket categories
 - [x] Ticket comments
 - [x] Priority filter
