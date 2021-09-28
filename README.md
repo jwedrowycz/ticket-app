@@ -61,9 +61,13 @@ $ npm install
 # Copy and configure your .env file
 $ cp .env.example .env
 
-# Run migrations with seed.
+# Run migrations with fake seed data.
 $ php artisan migrate --seed
+
+# Generate application encryption key
+$ php artisan key:generate
 ```
+Default admin login:password is *admin@example.com:qweqweqwe*
 
 ## Features
 
