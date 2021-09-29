@@ -84,6 +84,8 @@ Default admin login:password is *admin@example.com:qweqweqwe*
   - ticket comments
 - Notifications about states of tickets and new tickets
 - Ticket's status and priority filters
+- Adding users
+- Users have to change password on first login
 
 ## TODO
 
@@ -92,7 +94,8 @@ Default admin login:password is *admin@example.com:qweqweqwe*
 - [x] Ticket comments
 - [x] Priority filter
 - [x] Attachements for tickets
-
+- [ ] Users edition
+- [ ] Reset users password
 ## License
 
 MIT
