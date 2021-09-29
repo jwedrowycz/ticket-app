@@ -84,7 +84,6 @@ Default admin login:password is *admin@example.com:qweqweqwe*
   - ticket comments
 - Notifications about states of tickets and new tickets
 - Ticket's status and priority filters
-- 
 
 ## TODO
 
