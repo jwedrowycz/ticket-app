@@ -2,6 +2,8 @@
 
 A simple application to receive tickets for the help desk and administration sections.
 
+![Screenshot](screenshot1.png)
+
 ## Table of Content
 
 - [TicketApp](#ticketapp)
@@ -82,6 +84,7 @@ Default admin login:password is *admin@example.com:qweqweqwe*
   - ticket comments
 - Notifications about states of tickets and new tickets
 - Ticket's status and priority filters
+- 
 
 ## TODO
 
