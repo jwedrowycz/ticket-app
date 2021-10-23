@@ -5,6 +5,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueExpandableImage from 'vue-expandable-image';
 
+import store from './store';
+
 window.Vue = require('vue').default;
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -27,4 +29,5 @@ Vue.component('show-ticket-component', require('./components/ShowTicket.vue').de
 
 const app = new Vue({
     el: '#app',
+    store: store,
 });

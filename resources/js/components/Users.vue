@@ -8,13 +8,43 @@
                 </div>
             </template>
             <template #cell(actions)="row">
-                <!-- <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                    {{ row.detailsShowing ? 'Schowaj' : 'Pokaż'}} Opis
-                </b-button> -->
+                 <b-button size="sm" v-b-modal="'update-modal' + row.item.id" variant="primary" class="mr-2">
+                    Edytuj
+                </b-button>
+                <b-modal v-b-modal.update-modal+row.item.id>Czy na pewno chcesz usunąć tego użytkownika?</b-modal>
                 <b-button size="sm" v-b-modal="'confirm-modal' + row.item.id" variant="danger" class="mr-2">
                     Usuń
                 </b-button>
                 <b-modal :id="'confirm-modal' + row.item.id" @ok="deleteUser(row.item.id)" >Czy na pewno chcesz usunąć tego użytkownika?</b-modal>
+                 <b-modal
+                    :id="'update-modal' + row.item.id"
+                    ref="modal"
+                    title="Edytuj użytkownika"
+                    @ok="handleOk(row.item.id)"
+                    >
+                    <form ref="form" @submit.stop.prevent="updateUser(row.item.id)">
+                        <b-form-group
+                            label="Imię"
+                            label-for="name-input"
+                        >
+                            <b-form-input
+                                id="name-input"
+                                v-model="row.item.name"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                         <b-form-group
+                            label="Email"
+                            label-for="email-input"
+                        >
+                            <b-form-input
+                                id="email-input"
+                                v-model="row.item.email"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </form>
+                </b-modal>
             </template>
         </b-table>
         <pagination :data="users" @pagination-change-page="loadUsers"></pagination>
@@ -34,6 +64,7 @@ export default {
             isBusy: false,
             status: 0,
             priority: 0,
+            editedUser: {},
             fields: [
                     { key: 'id', label: 'Id' },
                     { key: 'name', label: 'Imię' },
@@ -52,7 +83,11 @@ export default {
     methods: {
         loadUsers(page = 1) {
                 this.isBusy = true;
-                axios.get('/api/admin/users')
+                axios.get('/api/admin/users', {
+                        params: {
+                            page: page
+                        }
+                    })
                     .then((response) => {
                         this.users = response.data;
                         this.isBusy = false;
@@ -66,7 +101,7 @@ export default {
         deleteUser(id) {
                 axios.delete('/api/admin/users/'+id).then(response => {
                     this.loadUsers(localStorage.getItem('current_page'));
-                    this.makeToast('Konta użytkownika zostało zdezaktywowane', 'Zgłoszenia', 'info');
+                    this.makeToast('Konta użytkownika zostało zdezaktywowane', 'Użytkownicy', 'info');
                 })
                 .catch(error => {
                     if (error.response.status == 422) {
@@ -76,7 +111,16 @@ export default {
                     }
                 });
         },
-        
+        handleOk(bvModalEvt) {
+            bvModalEvt.preventDefault()
+            this.handleSubmit()
+        },
+        handleSubmit() {
+            this.submittedNames.push(this.name)
+            this.$nextTick(() => {
+            this.$bvModal.hide('modal-prevent-closing')
+            })
+        },
         makeToast(msg, title, variant, position = 'b-toaster-bottom-right') {
                 this.$root.$bvToast.toast(msg, {
                     title: title,
